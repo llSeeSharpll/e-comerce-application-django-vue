@@ -5,21 +5,39 @@
         <h1 class="title">Sign up</h1>
         <form @submit.prevent="submitForm">
           <div class="field">
-            <label>Username</label>
+            <label>Fistname</label>
+            <div class="control">
+              <input type="text" class="input" v-model="firstname" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Lastname</label>
+            <div class="control">
+              <input type="text" class="input" v-model="lastname" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Username*</label>
             <div class="control">
               <input type="text" class="input" v-model="username" />
             </div>
           </div>
           <div class="field">
-            <label>Password</label>
+            <label>Password*</label>
             <div class="control">
               <input type="password" class="input" v-model="password" />
             </div>
           </div>
           <div class="field">
-            <label>Password2</label>
+            <label>Password2*</label>
             <div class="control">
               <input type="password" class="input" v-model="password2" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Email*</label>
+            <div class="control">
+              <input type="email" class="input" v-model="email" />
             </div>
           </div>
           <div class="notification is-danger" v-if="errors.length">
@@ -49,6 +67,9 @@ export default {
       username: "",
       password: "",
       password2: "",
+      firstname: "",
+      lastname: "",
+      email: "",
       errors: [],
     };
   },
@@ -67,10 +88,16 @@ export default {
       if (this.password2 !== this.password) {
         this.errors.push("The password doesn't match");
       }
+      if (this.email === "") {
+        this.errors.push("The email is missing");
+      }
       if (!this.errors.length) {
         const formData = {
           username: this.username,
           password: this.password,
+          email: this.email,
+          firstname: this.firstname,
+          lastname: this.lastname
         };
         axios
           .post("api/v1/users/", formData)
@@ -83,6 +110,7 @@ export default {
               duration: 2000,
               position: "bottom-right",
             });
+            this.$router.push("/log-in");
           })
           .catch((error) => {
             if (error.response) {
@@ -98,7 +126,6 @@ export default {
               console.log(JSON.stringify(error));
             }
           });
-        this.$router.push("login-in");
       }
     },
   },

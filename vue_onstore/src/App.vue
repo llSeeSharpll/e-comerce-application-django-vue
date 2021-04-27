@@ -54,7 +54,7 @@
             <div class="buttons">
               <template v-if="$store.state.isAuthenticated">
                 <router-link to="/my-Account" class="button is-light"
-                  >My Account</router-link
+                  >{{username}}'s Account</router-link
                 >
                 <button @click="logout()" class="button is-danger">Log out</button>
               </template>
@@ -101,10 +101,14 @@ export default {
       cart: {
         items: [],
       },
+      username:""
     };
   },
   mounted() {
     this.cart = this.$store.state.cart;
+    if(localStorage.getItem('username')){
+      this.username =  localStorage.getItem('username')
+    }
   },
   beforeCreate() {
     this.$store.commit("initializeStore");
