@@ -174,6 +174,7 @@ export default {
       const item = {
         product: this.product,
         quantity: this.quantity,
+        username: this.username
       };
 
       this.$store.commit("addToCart", item);

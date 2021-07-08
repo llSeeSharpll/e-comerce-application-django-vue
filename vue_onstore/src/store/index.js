@@ -12,11 +12,15 @@ export default createStore({
   },
   mutations: {
     initializeStore(state) {
+      if(localStorage.getItem("username")){
+        state.username = localStorage.getItem("username")
+      }
+
       if (localStorage.getItem("cart")) {
         let tempcart = JSON.parse(localStorage.getItem('cart'))
         //state.cart = tempcart
         for (let i = 0; i < tempcart.items.length; i++) {
-          if (tempcart.items[i].product.get_username === localStorage.getItem('username')) {
+          if (tempcart.items[i].username === localStorage.getItem('username')) {
             state.cart.items.push(tempcart.items[i])
           }
         }

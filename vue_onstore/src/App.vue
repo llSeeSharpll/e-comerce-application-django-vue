@@ -48,15 +48,19 @@
           <router-link to="/violin" class="navbar-item">Violin</router-link>
           <router-link to="/viola" class="navbar-item">Viola</router-link>
           <router-link to="/cello" class="navbar-item">Cello</router-link>
-          <router-link to="/double-bass" class="navbar-item">Double Bass</router-link>
+          <router-link to="/double-bass" class="navbar-item"
+            >Double Bass</router-link
+          >
           <router-link to="/guitar" class="navbar-item">Guitar</router-link>
           <div class="navbar-item">
             <div class="buttons">
               <template v-if="$store.state.isAuthenticated">
                 <router-link to="/my-Account" class="button is-light"
-                  >{{username}}'s Account</router-link
+                  >{{ username }}'s Account</router-link
                 >
-                <button @click="logout()" class="button is-danger">Log out</button>
+                <button @click="logout()" class="button is-danger">
+                  Log out
+                </button>
               </template>
               <template v-else>
                 <router-link to="/log-in" class="button is-light"
@@ -90,8 +94,6 @@
   </div>
 </template>
 
-
-
 <script>
 import axios from "axios";
 export default {
@@ -99,15 +101,16 @@ export default {
     return {
       showMobileMenu: false,
       cart: {
-        items: [],
+        items: [
+        ],
       },
-      username:""
+      username: "",
     };
   },
   mounted() {
     this.cart = this.$store.state.cart;
-    if(localStorage.getItem('username')){
-      this.username =  localStorage.getItem('username')
+    if (localStorage.getItem("username")) {
+      this.username = localStorage.getItem("username");
     }
   },
   beforeCreate() {
@@ -120,24 +123,24 @@ export default {
       axios.defaults.headers.common["Authorization"] = "";
     }
   },
-  methods:{
+  methods: {
     logout() {
       axios.defaults.headers.common["Authorization"] = "";
       localStorage.removeItem("token");
       localStorage.removeItem("username"), localStorage.removeItem("userid");
       this.$store.commit("removeToken");
       this.$store.commit("removeUsername");
-      this.$store.commit("resetCart")
+      this.$store.commit("resetCart");
       this.$router.push("/");
     },
   },
   computed: {
     cartTotalLength() {
       let totalLength = 0;
-      if(this.$store.state.isAuthenticated){
-      for (let i = 0; i < this.cart.items.length; i++) {
-        totalLength += this.cart.items[i].quantity;
-      }
+      if (this.$store.state.isAuthenticated) {
+        for (let i = 0; i < this.cart.items.length; i++) {
+          totalLength += this.cart.items[i].quantity;
+        }
       }
 
       return totalLength;
@@ -145,7 +148,6 @@ export default {
   },
 };
 </script>
-
 
 <style lang="scss">
 @import "../node_modules/bulma";
