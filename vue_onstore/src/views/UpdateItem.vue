@@ -106,7 +106,7 @@ export default {
         duration: 2000,
         position: "bottom-right",
       });
-      this.$router.push('/')
+      this.$router.push('/my-Account')
       });
     },
   },

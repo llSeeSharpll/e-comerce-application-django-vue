@@ -59,9 +59,7 @@
           class="field has-addons mt-6"
         >
           <div class="control mx-2">
-            <router-link
-              :to="{ name: 'UpdateItem'}"
-              class="button is-success"
+            <router-link :to="{ name: 'UpdateItem' }" class="button is-success"
               >Update Item</router-link
             >
           </div>
@@ -73,7 +71,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 import axios from "axios";
@@ -92,7 +89,7 @@ export default {
   async mounted() {
     await this.getProduct();
     this.imageChange();
-    this.$nextTick(function () {
+    this.$nextTick(function() {
       window.setInterval(() => {
         this.imageChange();
       }, 5000);
@@ -126,11 +123,27 @@ export default {
       this.$store.commit("setIsLoading", true);
 
       await axios
-        .post("api/v1/products/deleteItem", { username: this.username })
+        .post("api/v1/products/deleteItem/", { username: this.username })
         .then(() => {
-          console.log("done");
+          toast({
+            message: "Deleted item successfully",
+            type: "is-success",
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 2000,
+            position: "bottom-right",
+          });
+          this.$router.push("/my-Account");
         })
         .catch((error) => {
+          toast({
+            message: "An error occurred, try again ltr",
+            type: "is-danger",
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 2000,
+            position: "bottom-right",
+          });
           console.log(error);
         });
 
@@ -178,5 +191,3 @@ export default {
   coumputed: {},
 };
 </script>
-
-

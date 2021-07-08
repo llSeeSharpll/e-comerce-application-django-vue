@@ -57,6 +57,7 @@
 
 <script>
 import axios from "axios";
+import { toast } from "bulma-toast";
 export default {
   name: "AddItem",
   data() {
@@ -95,7 +96,15 @@ export default {
         },
       };
       axios.post("/api/v1/products/add/", formData, config).then(() => {
-        console.log("done");
+        toast({
+            message: "An new item was added",
+            type: "is-success",
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 2000,
+            position: "bottom-right",
+          });
+        this.$router.push('/my-Account');
       });
     },
     selectFile(event) {
