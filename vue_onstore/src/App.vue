@@ -1,16 +1,14 @@
 <template>
   <div class="wrapper">
     <nav class="navbar is-dark is-fixed-top">
-      <div class="navbar-brand">
-        <router-link to="/" class="navbar-item"
-          ><strong>PDVstore</strong></router-link
-        >
+      <div class="navbar-brand d-flex justify-content-between">
+        <router-link to="/" class="navbar-item">PDVstore</router-link>
         <a
-          class="navbar-burger"
+          class="navbar-burger ml-auto"
           aria-label="menu"
           aria-expanded="false"
           data-target="navbar-menu"
-          @click="showMobileMenu = !showMobileMenu"
+          @click="mobileshow()"
         >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -18,6 +16,7 @@
         </a>
       </div>
       <div
+        v-if="show"
         class="navbar-menu"
         id="navbar-menu"
         v-bind:class="{ 'is-active': showMobileMenu }"
@@ -35,7 +34,7 @@
                   />
                 </div>
                 <div class="control">
-                  <button class="button is-success">
+                  <button @click="toggleNavbar()" class="button is-success">
                     <span class="icon"><i class="fas fa-search"></i></span>
                   </button>
                 </div>
@@ -44,14 +43,27 @@
           </div>
         </div>
         <div class="navbar-end">
-          <router-link to="/bow" class="navbar-item">Bow</router-link>
-          <router-link to="/violin" class="navbar-item">Violin</router-link>
-          <router-link to="/viola" class="navbar-item">Viola</router-link>
-          <router-link to="/cello" class="navbar-item">Cello</router-link>
-          <router-link to="/double-bass" class="navbar-item"
+          <router-link @click="toggleNavbar()" to="/bow" class="navbar-item"
+            >Bow</router-link
+          >
+          <router-link @click="toggleNavbar()" to="/violin" class="navbar-item"
+            >Violin</router-link
+          >
+          <router-link @click="toggleNavbar()" to="/viola" class="navbar-item"
+            >Viola</router-link
+          >
+          <router-link @click="toggleNavbar()" to="/cello" class="navbar-item"
+            >Cello</router-link
+          >
+          <router-link
+            @click="toggleNavbar()"
+            to="/double-bass"
+            class="navbar-item"
             >Double Bass</router-link
           >
-          <router-link to="/guitar" class="navbar-item">Guitar</router-link>
+          <router-link @click="toggleNavbar()" to="/guitar" class="navbar-item"
+            >Guitar</router-link
+          >
           <div class="navbar-item">
             <div class="buttons">
               <template v-if="$store.state.isAuthenticated">
@@ -63,14 +75,24 @@
                 </button>
               </template>
               <template v-else>
-                <router-link to="/log-in" class="button is-light"
+                <router-link
+                  @click="toggleNavbar()"
+                  to="/log-in"
+                  class="button is-light"
                   >Log in</router-link
                 >
-                <router-link to="/sign-up" class="button is-light"
+                <router-link
+                  @click="toggleNavbar()"
+                  to="/sign-up"
+                  class="button is-light"
                   >Sign Up</router-link
                 >
               </template>
-              <router-link to="/cart" class="button is-success">
+              <router-link
+                @click="toggleNavbar()"
+                to="/cart"
+                class="button is-success"
+              >
                 <span class="icon"><i class="fas fa-shopping-cart"></i></span>
                 <span>Cart ({{ cartTotalLength }})</span>
               </router-link>
@@ -101,13 +123,14 @@ export default {
     return {
       showMobileMenu: false,
       cart: {
-        items: [
-        ],
+        items: [],
       },
       username: "",
+      show: true,
     };
   },
   mounted() {
+    this.show = true;
     this.cart = this.$store.state.cart;
     if (localStorage.getItem("username")) {
       this.username = localStorage.getItem("username");
@@ -124,7 +147,17 @@ export default {
     }
   },
   methods: {
+    mobileshow() {
+      if (this.show == false) {
+        this.toggleNavbar();
+      }
+      this.showMobileMenu = !this.showMobileMenu;
+    },
+    toggleNavbar() {
+      this.show = !this.show;
+    },
     logout() {
+      this.toggleNavbar();
       axios.defaults.headers.common["Authorization"] = "";
       localStorage.removeItem("token");
       localStorage.removeItem("username"), localStorage.removeItem("userid");

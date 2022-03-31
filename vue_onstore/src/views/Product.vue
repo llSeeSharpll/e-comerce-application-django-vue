@@ -14,7 +14,7 @@
               class="carousel-item"
               v-bind:class="{ active: isActive == imageIndex }"
             >
-              <img class="d-block w-100" :src="image" alt="First slide" />
+              <img class="d-block img-fluid" :src="image" alt="First slide" />
             </div>
           </div>
           <a

@@ -1,6 +1,6 @@
 <template>
   <div class="home mt-5">
-    <section class="background-image image-fluid pb-600 ">
+    <section class="background-image pb-600 ">
       <div class="hero is-medium mb-6">
         <div class="heor- has-text-centered">
           <p class="title mb-6">Welcome to PDVstore</p>
@@ -31,6 +31,7 @@ export default {
   data() {
     return {
       latestProducts: [],
+      
     };
   },
   components: {
@@ -58,18 +59,15 @@ export default {
 };
 </script>
 
-
 <style scoped>
-.background-image{
-  background-image: url('../assets/images/strings-mainpage.png');
-  background-size: 1270px !important;
+.background-image {
+  background-image: url("../assets/images/strings-mainpage.png");
+  -webkit-background-size: cover !important;
+  -moz-background-size: cover !important;
+  -o-background-size: cover !important;
+  background-size: cover !important;
 }
-.pb-600{
-  
+.pb-600 {
   padding-bottom: 600px;
 }
 </style>
-
-
-
-
